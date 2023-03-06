@@ -1,53 +1,35 @@
-from django.http import HttpResponseRedirect
-from django.shortcuts import get_object_or_404, render
-from django.urls import reverse
-from django.views import generic
-from django.utils import timezone
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404
+from rest_framework import status
+from rest_framework.response import Response
+from .serializers import ChoiceSerializer
+from .models import Question, Choice
+from rest_framework.mixins import UpdateModelMixin
+from rest_framework.generics import GenericAPIView
 
-from .models import Choice, Question
+def polls_results(request,pk):
+    queryset = Choice.objects.all().values('choice_text','votes').filter(question_id = pk) 
+    query_list = list(queryset)
+    return JsonResponse(query_list, safe=False, status=status.HTTP_200_OK)
 
+def polls_detail(request,pk):
+    poll = get_object_or_404(Question, pk=pk)
+    data = {
+        "question": poll.question_text,
+        "pub_date": poll.pub_date
+    }
+    return JsonResponse(data, status=status.HTTP_200_OK)
 
-class IndexView(generic.ListView):
-    template_name = 'polls/index.html'
-    context_object_name = 'latest_question_list'
+def polls_list(request):
+    data = list(Question.objects.all().values()[:20])
+    return JsonResponse({
+                         'questions': data},
+                        safe=False, status=status.HTTP_200_OK)
 
-    def get_queryset(self):
-        """Return the last five published questions."""
-        return Question.objects.filter(
-            pub_date__lte=timezone.now()
-        ).order_by('-pub_date')[:5]
+class VoteView(GenericAPIView, UpdateModelMixin):
+    queryset = Choice.objects.all()
+    serializer_class = ChoiceSerializer
 
-
-class DetailView(generic.DetailView):
-    model = Question
-    template_name = 'polls/detail.html'
-
-    def get_queryset(self):
-        """
-        Excludes any questions that aren't published yet.
-        """
-        return Question.objects.filter(pub_date__lte=timezone.now())
-
-
-class ResultsView(generic.DetailView):
-    model = Question
-    template_name = 'polls/results.html'
-
-
-def vote(request, question_id):
-    question = get_object_or_404(Question, pk=question_id)
-    try:
-        selected_choice = question.choice_set.get(pk=request.POST['choice'])
-    except (KeyError, Choice.DoesNotExist):
-        # Redisplay the question voting form.
-        return render(request, 'polls/detail.html', {
-            'question': question,
-            'error_message': "You didn't select a choice.",
-        })
-    else:
-        selected_choice.votes += 1
-        selected_choice.save()
-        # Always return an HttpResponseRedirect after successfully dealing
-        # with POST data. This prevents data from being posted twice if a
-        # user hits the Back button.
-        return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
+    def put(self, request, *args, **kwargs):
+        return self.partial_update(request, *args, **kwargs)
+    
