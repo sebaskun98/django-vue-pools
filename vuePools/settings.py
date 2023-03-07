@@ -13,6 +13,12 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 from pathlib import Path
 from decouple import config
 
+import mimetypes
+
+mimetypes.add_type("text/javascript", ".js", True)
+mimetypes.add_type("text/css", ".css", True)
+mimetypes.add_type("text/html", ".html", True)
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -35,12 +41,12 @@ ALLOWED_HOSTS = [
 ]
 
 CORS_ALLOWED_ORIGINS = [
-    "127.0.0.1", 
-    "localhost", 
-    "django-vue-pools.vercel.app",
-    "django-vue-pools-frontend.vercel.app"
+    "httsp://127.0.0.1", 
+    "https://localhost", 
+    "https://django-vue-pools.vercel.app",
+    "https://django-vue-pools-frontend.vercel.app"
 ]
-
+ 
 CORS_ALLOW_CREDENTIALS = False
 
 # Application definition
