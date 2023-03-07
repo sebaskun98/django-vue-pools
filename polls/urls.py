@@ -10,5 +10,3 @@ urlpatterns = [
     path('<int:pk>/results/', views.polls_results, name='results'),
     path('<int:pk>/vote', VoteView.as_view(), name='vote'),
 ]
-urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
-urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
