@@ -9,7 +9,7 @@ from rest_framework.decorators import api_view
 
 @api_view(http_method_names=['GET'])
 def polls_results(request,pk):
-    queryset = Choice.objects.all().values('choice_text','votes').filter(question_id = pk) 
+    queryset = Choice.objects.all().values('id','choice_text','votes', 'question_id').filter(question_id = pk) 
     query_list = list(queryset)
     return JsonResponse(query_list, safe=False, status=status.HTTP_200_OK)
 

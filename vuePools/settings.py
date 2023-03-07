@@ -25,12 +25,22 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG')
 
-ALLOWED_HOSTS = ['.vercel.app', 'localhost', '.supabase.co']
+CORS_ORIGIN_ALLOW_ALL = True
 
+ALLOWED_HOSTS = [
+    "127.0.0.1", 
+    "localhost",
+]
+
+CORS_ALLOWED_ORIGINS = [
+    "http://127.0.0.1", 
+]
+
+CORS_ALLOW_CREDENTIALS = False
 
 # Application definition
 
-INSTALLED_APPS = [
+INSTALLED_APPS = [ 
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -39,17 +49,19 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'polls.apps.PollsConfig',
     'rest_framework',
-    'corsheaders'
+    "corsheaders"
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    
 ]
 
 ROOT_URLCONF = 'vuePools.urls'
