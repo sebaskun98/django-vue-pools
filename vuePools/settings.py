@@ -61,7 +61,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'polls.apps.PollsConfig',
     'rest_framework',
-    "corsheaders"
+    "corsheaders",
+    'adminactions',
 ]
 
 MIDDLEWARE = [
