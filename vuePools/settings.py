@@ -34,6 +34,10 @@ DEBUG = config('DEBUG')
 
 CORS_ORIGIN_ALLOW_ALL = True
 
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
+
 ALLOWED_HOSTS = [
     "127.0.0.1", 
     "localhost",
@@ -64,6 +68,8 @@ INSTALLED_APPS = [
     "corsheaders",
     'adminactions',
     'import_export',
+    "debug_toolbar",
+    'auditlog'
 ]
 
 MIDDLEWARE = [
@@ -75,7 +81,9 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware'
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
+    'auditlog.middleware.AuditlogMiddleware'
     
 ]
 
@@ -164,3 +172,5 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUDITLOG_INCLUDE_ALL_MODELS=True
