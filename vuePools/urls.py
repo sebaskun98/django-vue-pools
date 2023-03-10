@@ -19,5 +19,6 @@ from django.urls import include, path, re_path
 urlpatterns = [
     path('polls/', include('polls.urls')),
     path('admin/', admin.site.urls),
-    re_path(r'^adminactions/', include('adminactions.urls'))
+    re_path(r'^adminactions/', include('adminactions.urls')),
+    path('__debug__/', include('debug_toolbar.urls')),
 ]
