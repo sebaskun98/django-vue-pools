@@ -69,7 +69,8 @@ INSTALLED_APPS = [
     'adminactions',
     'import_export',
     "debug_toolbar",
-    'auditlog'
+    'auditlog',
+    'jazzmin',
 ]
 
 MIDDLEWARE = [
