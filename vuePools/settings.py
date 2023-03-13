@@ -71,6 +71,7 @@ INSTALLED_APPS = [
     'import_export',
     "debug_toolbar",
     'auditlog',
+    'django_filters',
 ]
 
 MIDDLEWARE = [
@@ -129,6 +130,12 @@ DATABASES = {
         'PORT': '5432',
 
     }
+}
+
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': (
+        'django_filters.rest_framework.DjangoFilterBackend',
+    ),
 }
 
 JAZZMIN_SETTINGS = {
