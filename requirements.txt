@@ -7,6 +7,7 @@ django-auditlog==2.2.2
 django-cors-headers==3.14.0
 django-debug-toolbar==3.8.1
 django-import-export==3.1.0
+django-jazzmin==2.6.0
 djangorestframework==3.14.0
 et-xmlfile==1.1.0
 MarkupPy==1.14
