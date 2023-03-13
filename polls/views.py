@@ -6,6 +6,7 @@ from .models import Question, Choice
 from rest_framework.mixins import UpdateModelMixin
 from rest_framework.generics import GenericAPIView
 from rest_framework.decorators import api_view
+from django_filters import rest_framework as filters
 
 @api_view(http_method_names=['GET'])
 def polls_results(request,pk):
@@ -26,6 +27,8 @@ def polls_detail(request,pk):
 @api_view(http_method_names=['GET'])
 def polls_list(request):
     data = list(Question.objects.all().values()[:20])
+    filter_backends = (filters.DjangoFilterBackend,)
+    filterset_fields = ('question_text', 'pub_date')
     return JsonResponse({
                             'questions': data},
                             safe=False, status=status.HTTP_200_OK)
@@ -36,4 +39,10 @@ class VoteView(GenericAPIView, UpdateModelMixin):
 
     def put(self, request, *args, **kwargs):
         return self.partial_update(request, *args, **kwargs)
+    
+
+class ProductFilter(filters.FilterSet):
+    class Meta:
+        model = Question
+        fields = ('question_text', 'pub_date')
     
