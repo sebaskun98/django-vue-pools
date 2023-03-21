@@ -19,7 +19,7 @@ class Book(models.Model):
 
     class Meta:
         db_table = 'book'
-        ordering = ['name', 'authors']
+        ordering = ['name']
 
     def __str__(self):
         return self.name
