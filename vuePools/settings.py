@@ -73,6 +73,7 @@ INSTALLED_APPS = [
     "debug_toolbar",
     'auditlog',
     'django_filters',
+    'books.apps.BooksConfig'
 ]
 
 MIDDLEWARE = [
