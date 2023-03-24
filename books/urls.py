@@ -1,8 +1,9 @@
-from django.urls import include, path
+from django.urls import include, path, re_path
 
 from rest_framework import routers
 
-from .views import AuthorListAPIView, BookViewSet, PCompanyViewSet, RatingViewSet, CommentViewSet, CategoryViewSet
+from .views import AuthorListAPIView, BookViewSet, PCompanyViewSet, RatingViewSet, CommentViewSet, CategoryViewSet, \
+    BookList
 
 app_name = 'books'
 router = routers.SimpleRouter()
@@ -15,4 +16,5 @@ router.register('category', CategoryViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
+    re_path('^book/(?P<name>.+)/$', BookList.as_view()),
 ]
