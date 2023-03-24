@@ -1,6 +1,7 @@
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.viewsets import ModelViewSet
+from rest_framework import generics
 
 from .models import Author, Book, Category, Comment, PublishingCompany, Rating
 from .serializers import AuthorSerializer, BookSerializer, CategorySerializer, CommentSerializer, \
@@ -46,3 +47,14 @@ class RatingViewSet(ModelViewSet):
     filter_backends = [DjangoFilterBackend]
     serializer_class = RatingSerializer
     queryset = Rating.objects.all()
+
+class BookList(generics.ListAPIView):
+    serializer_class = BookSerializer
+
+    def get_queryset(self):
+        """
+        This view should return a list of all the purchases
+        for the currently authenticated user.
+        """
+        bookName = self.kwargs['name']
+        return Book.objects.filter(name=bookName)
