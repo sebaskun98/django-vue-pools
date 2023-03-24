@@ -31,12 +31,3 @@ class BookAdmin(admin.ModelAdmin):
     list_filter = ('publishingCompany', 'category',)
     search_fields = ('id', 'name', 'author__name',)
     autocomplete_fields = ('author', 'publishingCompany', 'category')
-
-    def get_queryset(self, request):
-        qs = super().get_queryset(request)
-        return qs.prefetch_related('author')
-
-    @admin.display(description='author')
-    def authors_names(self, obj):
-        names = list(obj.authors.values_list('name', flat=True))
-        return get_text_list(names, last_word='and')
