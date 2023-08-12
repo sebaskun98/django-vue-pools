@@ -1,4 +1,19 @@
-## Django App + DRF
+## Django App + Libs
+
+### Summary
+
+Back-end Django POC project to practice some libraries for a future professional project like: 
+- django-adminactions
+- django-auditlog
+- django-cors-headers
+- django-debug-toolbar
+- django-filter
+- django-import-export
+- django-jazzmin
+- djangorestframework
+- drf-yasg
+
+Project upload to Vercel and PostgreSQL hosted in Supabase. Used by Vue.js front-end.
 
 ### How to use it
 
